@@ -15,6 +15,12 @@ test_that("hdBase io", {
   l <- list(cars = head(cars), iris = head(iris))
   hb <- hdBase(l, license = "MIT")
 
+  # Check how it is saved
+  metadata <- hb$metadata()
+  jsonlite::write_json(metadata, "tmp/metadata.json",
+                       auto_unbox = TRUE, pretty = TRUE)
+
+
   expect_true(is_hdBase(hb))
 
   hb$name
@@ -40,6 +46,7 @@ test_that("hdBase io", {
 
   expect_equal(hb$hdTables, hb_read$hdTables)
 
+  unlink("tmp", recursive = TRUE)
 
 
 })
