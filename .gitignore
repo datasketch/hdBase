@@ -28,6 +28,9 @@ docs
 tmp
 tmp/*
 
+tests/testthat/tmp
+tests/testthat/tmp/*
+
 .DS_Store
 
 

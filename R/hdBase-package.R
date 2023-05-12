@@ -1,7 +1,7 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @importFrom hdTable hdTable is_hdTable
+#' @importFrom hdTable hdTable is_hdTable hdTable_write hdTable_read
 #' @export
 hdTable::hdTable
 

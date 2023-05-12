@@ -9,6 +9,7 @@ hdBase(
   name = NULL,
   description = NULL,
   slug = NULL,
+  formats = NULL,
   meta = NULL,
   dic = NULL,
   ...

@@ -15,7 +15,7 @@ test_that("Create hdBase ", {
   expect_true(are_hdTables(hbts))
   slugs <- hdTables_slugs(hbts)
   expect_equal(slugs, c("cars", "iris"))
-
+  expect_equal(names(hb$metadata()$hdTables), c("cars", "iris"))
 
 
   # From a data.frame
@@ -25,12 +25,25 @@ test_that("Create hdBase ", {
   hb$hdTables_slugs()
 
   hdts <- hb$hdTables
-  hdTables_slugs(hdts)
+  expect_equal(hdTables_slugs(hdts), "iris")
 
   hb$metadata()
-  hb$
-
+  expect_equal(names(hb$metadata()$hdTables), "iris")
   expect_equal(hb$meta$license, "MIT")
-  expect_equal(hb$metadata()$hdTables$d$name, "iris")
+
+  # From a list of data.frames
+
+  l <- list(cars = head(cars), iris = head(iris))
+  hb <- hdBase(l, license = "MIT")
+
+  ht1 <- hb$hdTables[[1]]
+  expect_equal(ht1$name, "cars")
+  ht2 <- hb$hdTables[[2]]
+  expect_equal(ht2$name, "iris")
+  expect_equal(names(hb$metadata()$hdTables),c("cars","iris"))
+
+  expect_equal(hb$hdBaseType, paste0(ht1$hdTableType,"__",ht2$hdTableType))
+  expect_equal(hb$hdBaseTypeGroup,
+               paste0(ht2$hdTableTypeGroup,"__",ht1$hdTableTypeGroup))
 
 })
