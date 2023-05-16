@@ -26,7 +26,7 @@ hdbase(
 
 \item{x}{A data frame}
 
-\item{hdtableType}{The type of hdtable to create}
+\item{hdtable_type}{The type of hdtable to create}
 
 \item{nam}{a custom description can be added}
 }
@@ -44,6 +44,6 @@ The main value of a hdbase is the metadata associated to a data base.
 }
 }
 \examples{
-hdtable(mtcars, hdtableType = "Num", name = "MTCars")
+hdtable(mtcars, hdtable_type = "Num", name = "MTCars")
 
 }

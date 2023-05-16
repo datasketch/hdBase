@@ -8,10 +8,10 @@ hdbaseClass <- R6::R6Class(
     formats = NULL,
     hdtables = NULL,
     meta = NULL,
-    hdbaseType = NULL,
-    hdbaseTypeGroup = NULL,
+    hdbase_type = NULL,
+    hdbase_type_group = NULL,
 
-    initialize = function(hdtables, dic = NULL, hdtableType = NULL,
+    initialize = function(hdtables, dic = NULL, hdtable_type = NULL,
                           name = NULL, description = NULL,
                           slug = NULL, formats = NULL,
                           meta = NULL) {
@@ -31,21 +31,21 @@ hdbaseClass <- R6::R6Class(
       self$slug <- slug
       self$formats <- formats
       self$meta <- meta
-      self$hdbaseType <- self$hdbaseType_creator()
-      self$hdbaseTypeGroup <- self$hdbaseTypeGroup_creator()
+      self$hdbase_type <- self$hdbase_type_creator()
+      self$hdbase_type_group <- self$hdbase_type_group_creator()
 
     },
     hdtables_slugs = function(){
       self$hdtables[[1]]$slug
       hdtables_slugs(self$hdtables)
     },
-    hdbaseType_creator = function(){
-      hdbase <- hdtables_hdtableTypes(self$hdtables)
+    hdbase_type_creator = function(){
+      hdbase <- hdtables_hdtable_types(self$hdtables)
       paste(hdbase, collapse = "__")
     },
-    hdbaseTypeGroup_creator = function(){
-      hdbaseGroup <- hdtables_hdtableTypeGroups(self$hdtables)
-      paste(sort(hdbaseGroup), collapse = "__")
+    hdbase_type_group_creator = function(){
+      hdbase_group <- hdtables_hdtable_types(self$hdtables)
+      paste(sort(hdbase_group), collapse = "__")
     },
     metadata = function(){
       base_info <- list(
@@ -54,13 +54,13 @@ hdbaseClass <- R6::R6Class(
         slug = self$slug,
         formats = self$formats,
         credits = self$credits,
-        hdbaseType = as.character(self$hdbaseType),
-        hdbaseTypeGroup = as.character(self$hdbaseTypeGroup),
+        hdtable_type = as.character(self$hdtable_type),
+        hdtable_type_group = as.character(self$hdtable_type_group),
         hdtables_slugs = self$hdtables_slugs()
       )
       hdts_info <- purrr::map(self$hdtables, function(hdt){
         metadata <- hdt$metadata()
-        metadata$hdtableType <- as.character(metadata$hdtableType)
+        metadata$hdtable_type <- as.character(metadata$hdtable_type)
         metadata
       })
       names(hdts_info) <- hdtables_slugs(self$hdtables)
@@ -90,12 +90,12 @@ hdtables_slugs <- function(ts){
   purrr::map_chr(ts, ~ .$slug)
 }
 
-hdtables_hdtableTypes <- function(ts){
-  purrr::map_chr(ts, ~ .$hdtableType)
+hdtables_hdtable_types <- function(ts){
+  purrr::map_chr(ts, ~ .$hdtable_type)
 }
 
-hdtables_hdtableTypeGroups <- function(ts){
-  purrr::map_chr(ts, ~ .$hdtableTypeGroup)
+hdtables_hdtable_types <- function(ts){
+  purrr::map_chr(ts, ~ .$hdtable_type)
 }
 
 

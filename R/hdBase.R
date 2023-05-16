@@ -8,7 +8,7 @@
 #' - hdtables: A list of hdtables
 #' - slug: a custom slug can be added to the hdbase
 #' @param x A data frame
-#' @param hdtableType The type of hdtable to create
+#' @param hdtable_type The type of hdtable to create
 #' @param dic a custom variable dictionary can be added. [create_dic()] can help you with that.
 #' @param name a custom name can be added
 #' @param nam a custom description can be added
@@ -16,7 +16,7 @@
 #' @param meta Custom Metadata can be added
 #'
 #' @examples
-#' hdtable(mtcars, hdtableType = "Num", name = "MTCars")
+#' hdtable(mtcars, hdtable_type = "Num", name = "MTCars")
 #'
 #' @return A hdtable object
 

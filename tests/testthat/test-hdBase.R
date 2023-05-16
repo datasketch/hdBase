@@ -42,8 +42,9 @@ test_that("Create hdbase ", {
   expect_equal(ht2$name, "iris")
   expect_equal(names(hb$metadata()$hdtables),c("cars","iris"))
 
-  expect_equal(hb$hdbaseType, paste0(ht1$hdtableType,"__",ht2$hdtableType))
-  expect_equal(hb$hdbaseTypeGroup,
-               paste0(ht2$hdtableTypeGroup,"__",ht1$hdtableTypeGroup))
+  expect_equal(hb$hdbase_type, paste0(ht1$hdtable_type,"__",ht2$hdtable_type))
+  expect_equal(hb$hdbase_type_group,
+               paste0(sort(c(ht1$hdtable_type, ht2$hdtable_type)), collapse = "__"))
+
 
 })

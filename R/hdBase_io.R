@@ -20,7 +20,7 @@ hdbase_read <- function(path, slug = NULL){
   meta_json <- jsonlite::read_json(file.path(path, base_file), simplifyVector = TRUE)
 
   standard_fields <- c("name", "description", "slug", "formats",
-                       "hdbaseType", "hdbaseTypeGroup",
+                       "hdtable_type", "hdtable_type_group",
                        "hdtables_slugs",
                        "credits")
   additional_meta <- meta_json[!names(meta_json) %in% standard_fields]
