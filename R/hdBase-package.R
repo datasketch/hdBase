@@ -1,9 +1,9 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @importFrom hdTable hdTable is_hdTable hdTable_write hdTable_read
+#' @importFrom hdtable hdtable is_hdtable hdtable_write hdtable_read
 #' @export
-hdTable::hdTable
+hdtable::hdtable
 
 ## usethis namespace: start
 #' @importFrom dstools %||%

@@ -1,17 +1,17 @@
 
-hdBaseClass <- R6::R6Class(
-  "hdBase",
+hdbaseClass <- R6::R6Class(
+  "hdbase",
   public = list(
     name = NULL,
     description = NULL,
     slug = NULL,
     formats = NULL,
-    hdTables = NULL,
+    hdtables = NULL,
     meta = NULL,
-    hdBaseType = NULL,
-    hdBaseTypeGroup = NULL,
+    hdbaseType = NULL,
+    hdbaseTypeGroup = NULL,
 
-    initialize = function(hdTables, dic = NULL, hdTableType = NULL,
+    initialize = function(hdtables, dic = NULL, hdtableType = NULL,
                           name = NULL, description = NULL,
                           slug = NULL, formats = NULL,
                           meta = NULL) {
@@ -22,8 +22,8 @@ hdBaseClass <- R6::R6Class(
       formats <- unique(c(c('csv', 'json'), formats))
 
 
-      if(are_hdTables(hdTables)){
-        self$hdTables <- hdTables
+      if(are_hdtables(hdtables)){
+        self$hdtables <- hdtables
       }
 
       self$name <- name
@@ -31,21 +31,21 @@ hdBaseClass <- R6::R6Class(
       self$slug <- slug
       self$formats <- formats
       self$meta <- meta
-      self$hdBaseType <- self$hdBaseType_creator()
-      self$hdBaseTypeGroup <- self$hdBaseTypeGroup_creator()
+      self$hdbaseType <- self$hdbaseType_creator()
+      self$hdbaseTypeGroup <- self$hdbaseTypeGroup_creator()
 
     },
-    hdTables_slugs = function(){
-      self$hdTables[[1]]$slug
-      hdTables_slugs(self$hdTables)
+    hdtables_slugs = function(){
+      self$hdtables[[1]]$slug
+      hdtables_slugs(self$hdtables)
     },
-    hdBaseType_creator = function(){
-      hdBase <- hdTables_hdTableTypes(self$hdTables)
-      paste(hdBase, collapse = "__")
+    hdbaseType_creator = function(){
+      hdbase <- hdtables_hdtableTypes(self$hdtables)
+      paste(hdbase, collapse = "__")
     },
-    hdBaseTypeGroup_creator = function(){
-      hdBaseGroup <- hdTables_hdTableTypeGroups(self$hdTables)
-      paste(sort(hdBaseGroup), collapse = "__")
+    hdbaseTypeGroup_creator = function(){
+      hdbaseGroup <- hdtables_hdtableTypeGroups(self$hdtables)
+      paste(sort(hdbaseGroup), collapse = "__")
     },
     metadata = function(){
       base_info <- list(
@@ -54,17 +54,17 @@ hdBaseClass <- R6::R6Class(
         slug = self$slug,
         formats = self$formats,
         credits = self$credits,
-        hdBaseType = as.character(self$hdBaseType),
-        hdBaseTypeGroup = as.character(self$hdBaseTypeGroup),
-        hdTables_slugs = self$hdTables_slugs()
+        hdbaseType = as.character(self$hdbaseType),
+        hdbaseTypeGroup = as.character(self$hdbaseTypeGroup),
+        hdtables_slugs = self$hdtables_slugs()
       )
-      hdts_info <- purrr::map(self$hdTables, function(hdt){
+      hdts_info <- purrr::map(self$hdtables, function(hdt){
         metadata <- hdt$metadata()
-        metadata$hdTableType <- as.character(metadata$hdTableType)
+        metadata$hdtableType <- as.character(metadata$hdtableType)
         metadata
       })
-      names(hdts_info) <- hdTables_slugs(self$hdTables)
-      hdts_info <-  list("hdTables" = hdts_info)
+      names(hdts_info) <- hdtables_slugs(self$hdtables)
+      hdts_info <-  list("hdtables" = hdts_info)
       c(base_info, self$meta, hdts_info)
     },
     write_meta_json = function(path = ""){
@@ -78,31 +78,31 @@ hdBaseClass <- R6::R6Class(
       path <- file.path(path, self$slug)
       self$write_meta_json(path)
       # Returns list of tibbles ready to write
-      purrr::walk(self$hdTables, function(hdt){
-        hdTable_write(hdt, path)
+      purrr::walk(self$hdtables, function(hdt){
+        hdtable_write(hdt, path)
       })
     }
   )
 )
 
 
-hdTables_slugs <- function(ts){
+hdtables_slugs <- function(ts){
   purrr::map_chr(ts, ~ .$slug)
 }
 
-hdTables_hdTableTypes <- function(ts){
-  purrr::map_chr(ts, ~ .$hdTableType)
+hdtables_hdtableTypes <- function(ts){
+  purrr::map_chr(ts, ~ .$hdtableType)
 }
 
-hdTables_hdTableTypeGroups <- function(ts){
-  purrr::map_chr(ts, ~ .$hdTableTypeGroup)
+hdtables_hdtableTypeGroups <- function(ts){
+  purrr::map_chr(ts, ~ .$hdtableTypeGroup)
 }
 
 
 
 
-are_hdTables <- function(ts){
-  all(purrr::map_lgl(ts, is_hdTable))
+are_hdtables <- function(ts){
+  all(purrr::map_lgl(ts, is_hdtable))
 }
 
 are_data_frames <- function(ts){

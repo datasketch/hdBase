@@ -3,7 +3,7 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{hdTable}
+\alias{hdtable}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -11,6 +11,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{hdTable}{\code{\link[hdTable:hdTable-package]{hdTable}}}
+  \item{hdtable}{\code{\link[hdtable:hdTable-package]{hdtable}}}
 }}
 

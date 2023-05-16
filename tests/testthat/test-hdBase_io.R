@@ -1,7 +1,7 @@
-test_that("hdBase io", {
+test_that("hdbase io", {
 
   d <- tibble::tibble("Helloo X" = 1, "x 43" = as.Date("2020-04-21"))
-  hdb <- hdBase(d, name = "Los Carros", mas = "fda", formats = "xlsx")
+  hdb <- hdbase(d, name = "Los Carros", mas = "fda", formats = "xlsx")
 
   hdb$write("tmp/hdb")
 
@@ -13,7 +13,7 @@ test_that("hdBase io", {
 
 
   l <- list(cars = head(cars), iris = head(iris))
-  hb <- hdBase(l, license = "MIT")
+  hb <- hdbase(l, license = "MIT")
 
   # Check how it is saved
   metadata <- hb$metadata()
@@ -21,11 +21,12 @@ test_that("hdBase io", {
                        auto_unbox = TRUE, pretty = TRUE)
 
 
-  expect_true(is_hdBase(hb))
+  expect_true(is_hdbase(hb))
 
   hb$name
+  hb$metadata()
 
-  hdBase_write(hb, "tmp")
+  hdbase_write(hb, "tmp")
   expect_true(dir.exists(file.path("tmp", hb$slug)))
 
   hb_meta <- jsonlite::read_json(
@@ -39,12 +40,12 @@ test_that("hdBase io", {
 
   path <- "tmp/l"
 
-  hb_read <- hdBase_read(path)
+  hb_read <- hdbase_read(path)
 
   expect_equal(hb$name, hb_read$name)
   expect_equal(hb$license, hb_read$license)
 
-  expect_equal(hb$hdTables, hb_read$hdTables)
+  expect_equal(hb$hdtables, hb_read$hdtables)
 
   unlink("tmp", recursive = TRUE)
 

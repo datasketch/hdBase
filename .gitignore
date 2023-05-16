@@ -20,9 +20,9 @@ vignettes/*.pdf
 
 #*.Rproj
 .Rproj.user
-hdBase.Rcheck/
-hdBase*.tar.gz
-hdBase*.tgz
+hdbase.Rcheck/
+hdbase*.tar.gz
+hdbase*.tgz
 docs
 
 tmp
