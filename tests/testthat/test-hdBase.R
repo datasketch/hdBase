@@ -7,7 +7,7 @@ test_that("Create hdbase ", {
   expect_null(hb$hdtables)
 
   # From a list of hdtables
-  t1 <- hdtable(cars)
+  t1 <- hdtable(cars, name = "CARS")
   t2 <- hdtable(iris)
   ts <- list(t1,t2)
   hb <- hdbase(ts)

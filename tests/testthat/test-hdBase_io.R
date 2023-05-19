@@ -12,6 +12,12 @@ test_that("hdbase io", {
                paste0(hdb$slug, expected_write_ext))
 
 
+})
+
+test_that("hdbase read write", {
+
+  ####
+
   l <- list(cars = head(cars), iris = head(iris))
   hb <- hdbase(l, license = "MIT")
 
@@ -26,13 +32,14 @@ test_that("hdbase io", {
   hb$name
   hb$metadata()
 
+
   hdbase_write(hb, "tmp")
   expect_true(dir.exists(file.path("tmp", hb$slug)))
 
   hb_meta <- jsonlite::read_json(
     file.path("tmp", hb$slug,
               paste0(hb$slug,".base.json"))
-    )
+  )
   expect_equal(hb$name, hb_meta$name)
 
 
