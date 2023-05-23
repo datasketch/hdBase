@@ -87,7 +87,7 @@ hdbaseClass <- R6::R6Class(
 
 
 hdtables_slugs <- function(ts){
-  purrr::map_chr(ts, ~ .$slug)
+  purrr::map_chr(ts, ~ .$slug) |> unname()
 }
 
 hdtables_hdtable_types <- function(ts){

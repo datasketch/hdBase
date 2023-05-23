@@ -36,6 +36,11 @@ test_that("Create hdbase ", {
   l <- list(cars = head(cars), iris = head(iris))
   hb <- hdbase(l, license = "MIT")
 
+  hb$hdtables_slugs()
+
+  expect_null(names(hb$hdtables_slugs()))
+
+
   ht1 <- hb$hdtables[[1]]
   expect_equal(ht1$name, "cars")
   ht2 <- hb$hdtables[[2]]
