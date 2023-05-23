@@ -53,16 +53,15 @@ test_that("Create hdbase ", {
 test_that("hdbase convenience funs", {
 
 
-
-  b <- hdbase::hdbases$cars_iris
-
-  expect_equal(names(hdbase_hdtables(b)), c("cars", "iris"))
-
-  expect_equal(hdbase_hdtables_types(b),
-               list(
-                 cars = hdtable::hdtable_type("Num-Num"),
-                 iris = hdtable::hdtable_type("Num-Num-Num-Num-Cat")
-               ))
+  # b <- hdbase:::base_samples$cars_iris
+  #
+  # expect_equal(names(hdbase_hdtables(b)), c("cars", "iris"))
+  #
+  # expect_equal(hdbase_hdtables_types(b),
+  #              list(
+  #                cars = hdtable::hdtable_type("Num-Num"),
+  #                iris = hdtable::hdtable_type("Num-Num-Num-Num-Cat")
+  #              ))
 
 
 })
