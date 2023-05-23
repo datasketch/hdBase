@@ -85,4 +85,38 @@ is_hdbase <- function(x) {
 }
 
 
+#' @title hdbase_hdtables
+#' @description get hdtables from base
+#'
+#' @param x an hdbase object
+#'
+#' @return returns a list of hdtables from the hdbase
+#'
+#' @examples
+#' some_base <- hdbase(mtcars)
+#' is_hdbase(some_base)
+#'
+#' @export
+hdbase_hdtables <- function(b){
+  b$hdtables
+}
+
+#' @title hdbase_hdtables_types
+#' @description get hdtables from base
+#'
+#' @param x an hdbase object
+#'
+#' @return returns a list of hdtables from the hdbase
+#'
+#' @examples
+#' some_base <- hdbase(mtcars)
+#' is_hdbase(some_base)
+#'
+#' @export
+hdbase_hdtables_types <- function(b){
+  purrr::map(b$hdtables, function(h) h$hdtable_type)
+}
+
+
+
 

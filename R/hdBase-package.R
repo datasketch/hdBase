@@ -1,6 +1,10 @@
 #' @keywords internal
 "_PACKAGE"
 
+#' @importFrom hdtype hdtype
+#' @export
+hdtype::hdtype
+
 #' @importFrom hdtable hdtable is_hdtable hdtable_write hdtable_read
 #' @export
 hdtable::hdtable
