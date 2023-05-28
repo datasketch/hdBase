@@ -32,7 +32,21 @@ hdbase <- function(ts,
 
   name <- name %||% deparse(substitute(ts))
 
-  if(is.data.frame(ts)){
+  if(is.character(ts)){
+    if(!dir.exists(path)){
+      stop("No path found")
+    }
+    csv_files <- list.files(path, pattern = "csv", full.names = TRUE)
+    if(length(csv_files) == 0){
+      stop("No csv files found")
+    }
+    nms <- tools::file_path_sans_ext(basename(csv_files))
+    hdts <- purrr::map(csv_files, function(file){
+      d <- readr::read_csv(file, show_col_types = FALSE)
+      hdtable(d)
+    })
+    names(hdts) <- nms
+  } else if(is.data.frame(ts)){
     hdt <- hdtable(ts, dic = dic,
                    name = name, description = description,
                    slug = slug, formats = formats)

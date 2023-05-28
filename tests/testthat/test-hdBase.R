@@ -55,6 +55,24 @@ test_that("Create hdbase ", {
 })
 
 
+test_that("hdbase from folder of CSVs", {
+
+  path <- "tmp/folder"
+  if(!dir.exists(path)) dir.create(path, recursive = TRUE)
+
+  readr::write_csv(iris, file.path(path,"iris.csv"))
+  readr::write_csv(cars, file.path(path,"cars.csv"))
+
+  h <- hdbase(path)
+
+  expect_true(is_hdbase(h))
+
+  unlink(path, recursive = TRUE)
+
+})
+
+
+
 test_that("hdbase convenience funs", {
 
 

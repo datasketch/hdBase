@@ -58,3 +58,25 @@ test_that("hdbase read write", {
 
 
 })
+
+
+test_that("read database",{
+
+
+  with_na <- tibble::tibble(a = 1:5, z = rep(NA,5))
+  h <- hdbase(list(with_na = with_na, cars = cars))
+  hdbase_write(h, "tmp/with_na")
+  h2 <- hdbase_read("tmp/with_na/list-with-na-with-na-cars-cars/")
+
+  expect_equal(h, h2)
+  # TODO make sure not to convert slugs with _
+
+})
+
+
+
+
+
+
+
+
