@@ -47,6 +47,15 @@ hdbaseClass <- R6::R6Class(
       hdbase_group <- hdtables_hdtable_types(self$hdtables)
       paste(sort(hdbase_group), collapse = "__")
     },
+    hdtables_meta = function(){
+      hdts_meta <- purrr::map(self$hdtables, function(hdt){
+        metadata <- hdt$metadata()
+        metadata$hdtable_type <- as.character(metadata$hdtable_type)
+        metadata
+      })
+      names(hdts_meta) <- hdtables_slugs(self$hdtables)
+      hdts_meta
+    },
     metadata = function(){
       base_info <- list(
         name = self$name,
@@ -58,14 +67,9 @@ hdbaseClass <- R6::R6Class(
         hdtable_type_group = as.character(self$hdtable_type_group),
         hdtables_slugs = self$hdtables_slugs()
       )
-      hdts_info <- purrr::map(self$hdtables, function(hdt){
-        metadata <- hdt$metadata()
-        metadata$hdtable_type <- as.character(metadata$hdtable_type)
-        metadata
-      })
-      names(hdts_info) <- hdtables_slugs(self$hdtables)
-      hdts_info <-  list("hdtables_meta" = hdts_info)
-      c(base_info, self$meta, hdts_info)
+      hdts_meta <- self$hdtables_meta()
+      hdts_meta <-  list("hdtables_meta" = hdts_meta)
+      c(base_info, self$meta, hdts_meta)
     },
     write_meta_json = function(path = ""){
       if(!dir.exists(path)) dir.create(path, recursive = TRUE)

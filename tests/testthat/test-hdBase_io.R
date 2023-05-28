@@ -71,6 +71,13 @@ test_that("read database",{
 
   expect_equal(h, h2)
 
+  h_meta <- hdbase_hdtables_meta(h)
+  expect_equal(h_meta$cars$nrow, 50)
+
+  h2_meta <- hdbase_hdtables_meta(h)
+  expect_equal(h_meta, h2_meta)
+
+
 })
 
 
