@@ -33,6 +33,7 @@ hdbase <- function(ts,
   name <- name %||% deparse(substitute(ts))
 
   if(is.character(ts)){
+    path <- ts
     if(!dir.exists(path)){
       stop("No path found")
     }

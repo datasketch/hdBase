@@ -15,7 +15,7 @@ test_that("Create hdbase ", {
   expect_true(are_hdtables(hbts))
   slugs <- hdtables_slugs(hbts)
   expect_equal(slugs, c("cars", "iris"))
-  expect_equal(names(hb$metadata()$hdtables), c("cars", "iris"))
+  expect_equal(names(hb$metadata()$hdtables_meta), c("cars", "iris"))
 
 
   # From a data.frame
@@ -28,7 +28,7 @@ test_that("Create hdbase ", {
   expect_equal(hdtables_slugs(hdts), "iris")
 
   hb$metadata()
-  expect_equal(names(hb$metadata()$hdtables), "iris")
+  expect_equal(names(hb$metadata()$hdtables_meta), "iris")
   expect_equal(hb$meta$license, "MIT")
 
   # From a list of data.frames
@@ -45,7 +45,7 @@ test_that("Create hdbase ", {
   expect_equal(ht1$name, "cars")
   ht2 <- hb$hdtables[[2]]
   expect_equal(ht2$name, "iris")
-  expect_equal(names(hb$metadata()$hdtables),c("cars","iris"))
+  expect_equal(names(hb$metadata()$hdtables_meta),c("cars","iris"))
 
   expect_equal(hb$hdbase_type, paste0(ht1$hdtable_type,"__",ht2$hdtable_type))
   expect_equal(hb$hdbase_type_group,

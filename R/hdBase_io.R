@@ -12,6 +12,7 @@ hdbase_write <- function(hdb, path = ""){
 hdbase_read <- function(path, slug = NULL){
 
   find_base <- list.files(path, pattern = "\\.base\\.json")
+
   slug <- slug %||% basename(path)
   base_file <- paste0(slug, ".base.json")
   if(! base_file  == find_base)
@@ -21,7 +22,7 @@ hdbase_read <- function(path, slug = NULL){
 
   standard_fields <- c("name", "description", "slug", "formats",
                        "hdtable_type", "hdtable_type_group",
-                       "hdtables_slugs",
+                       "hdtables_slugs", "hdtables_meta",
                        "credits")
   additional_meta <- meta_json[!names(meta_json) %in% standard_fields]
 

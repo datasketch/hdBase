@@ -64,7 +64,7 @@ hdbaseClass <- R6::R6Class(
         metadata
       })
       names(hdts_info) <- hdtables_slugs(self$hdtables)
-      hdts_info <-  list("hdtables" = hdts_info)
+      hdts_info <-  list("hdtables_meta" = hdts_info)
       c(base_info, self$meta, hdts_info)
     },
     write_meta_json = function(path = ""){
