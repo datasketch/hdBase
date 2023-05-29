@@ -59,6 +59,55 @@ test_that("hdbase read write", {
 
 })
 
+test_that("Read large db", {
+
+  path <- "tmp/large_files"
+  dir.create(path, recursive = TRUE, showWarnings = FALSE)
+
+  file_path_rand <- file.path(path, "rand.csv")
+  file_path_rand_dic <- file.path(path, "rand.dic.csv")
+  file_path_flights <- file.path(path, "nycflights.csv")
+  file_path_flights_dic <- file.path(path, "nycflights.dic.csv")
+
+  # Create large table
+  rand <- rep(dstools::random_name(100000), 10000)
+  rand <- tibble::tibble(rand = rand, n = 1:length(rand))
+
+
+  # tictoc::tic()
+  vroom::vroom_write(rand, file_path_rand)
+  x <- nycflights13::flights
+  vroom::vroom_write(x, file_path_flights)
+  # tictoc::toc()
+
+  dic_rand <- tibble::tibble(id = c("rand", "n"),
+                        hdtype = c("Cat", "Num"))
+  vroom::vroom_write(dic_rand, file_path_rand_dic)
+  dic_flights <- hdtable::create_dic(head(x, 1000))
+  vroom::vroom_write(dic_flights, file_path_flights_dic)
+
+  ## Read HDBASE
+  ts <- path
+  h <- hdbase(ts)
+
+  t1 <- h$hdtables[[1]]
+  expect_null(t1$dd)
+  data <- t1$data
+  expect_equal(nrow(t1$dd), nrow(x))
+  expect_equal(h$hdtables_slugs(), c("nycflights", "rand"))
+
+
+  # tictoc::tic()
+  # rand <- vroom::vroom(file_path_rand, show_col_types = FALSE)
+  # flights <- vroom::vroom(file_path_flights, show_col_types = FALSE)
+  # tictoc::toc()
+
+  unlink("tmp/large_files", recursive = TRUE)
+
+})
+
+
+
 
 test_that("read database",{
 

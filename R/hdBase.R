@@ -37,16 +37,29 @@ hdbase <- function(ts,
     if(!dir.exists(path)){
       stop("No path found")
     }
-    csv_files <- list.files(path, pattern = "csv", full.names = TRUE)
+    csv_files <- list.files(path, pattern = "\\.csv$", full.names = TRUE)
     if(length(csv_files) == 0){
       stop("No csv files found")
     }
-    nms <- tools::file_path_sans_ext(basename(csv_files))
-    hdts <- purrr::map(csv_files, function(file){
-      d <- readr::read_csv(file, show_col_types = FALSE)
-      hdtable(d)
-    })
-    names(hdts) <- nms
+    csv_files <- csv_files[!grepl("\\.dic\\.csv$", csv_files)]
+    large_data <- any(purrr::map_lgl(csv_files, is_large_data))
+
+    if(!large_data){
+      nms <- tools::file_path_sans_ext(basename(csv_files))
+      hdts <- purrr::map(csv_files, function(file){
+        d <- vroom::vroom(file, show_col_types = FALSE)
+        hdtable(d)
+      })
+      names(hdts) <- nms
+    }else{
+      nms <- tools::file_path_sans_ext(basename(csv_files))
+      hdts <- purrr::map(csv_files, function(file){
+        dic <- vroom::vroom(gsub(".csv", ".dic.csv", file), show_col_types = F)
+        hdtable(d = file, dic = dic)
+      })
+      names(hdts) <- nms
+    }
+
   } else if(is.data.frame(ts)){
     hdt <- hdtable(ts, dic = dic,
                    name = name, description = description,
