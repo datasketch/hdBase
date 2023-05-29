@@ -7,6 +7,11 @@
 
 - create base from folder of CSV files
 
+- hdbase with large data
+- Add rcd____id for CSVs
+
+
+
 ## Todo 
 
 

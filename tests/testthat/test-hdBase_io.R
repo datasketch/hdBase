@@ -14,6 +14,10 @@ test_that("hdbase io", {
 
 })
 
+
+
+
+
 test_that("hdbase read write", {
 
   ####
@@ -26,12 +30,10 @@ test_that("hdbase read write", {
   jsonlite::write_json(metadata, "tmp/metadata.json",
                        auto_unbox = TRUE, pretty = TRUE)
 
-
   expect_true(is_hdbase(hb))
 
   hb$name
   hb$metadata()
-
 
   hdbase_write(hb, "tmp")
   expect_true(dir.exists(file.path("tmp", hb$slug)))
@@ -41,7 +43,6 @@ test_that("hdbase read write", {
               paste0(hb$slug,".base.json"))
   )
   expect_equal(hb$name, hb_meta$name)
-
 
   ## Read
 
@@ -95,6 +96,15 @@ test_that("Read large db", {
   data <- t1$data
   expect_equal(nrow(t1$dd), nrow(x))
   expect_equal(h$hdtables_slugs(), c("nycflights", "rand"))
+
+  path <- "tmp/large_files_base"
+  hdbase_write(h, path)
+
+
+  t2 <- hdbase_read(file.path(path, "ts"))
+
+
+
 
 
   # tictoc::tic()

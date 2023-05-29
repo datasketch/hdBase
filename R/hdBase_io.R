@@ -9,7 +9,7 @@ hdbase_write <- function(hdb, path = ""){
 
 
 #' @export
-hdbase_read <- function(path, slug = NULL){
+hdbase_read <- function(path, slug = NULL, lazy = TRUE){
 
   find_base <- list.files(path, pattern = "\\.base\\.json")
 
