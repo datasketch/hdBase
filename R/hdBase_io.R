@@ -28,7 +28,8 @@ hdbase_read <- function(path, slug = NULL, lazy = TRUE){
 
   hdtables_slugs <- meta_json$hdtables_slugs
 
-  hdtables <- purrr::map(hdtables_slugs, ~ hdtable_read(path, slug = .)) |>
+  hdtables <- purrr::map(hdtables_slugs,
+                         ~ hdtable_read(path, slug = ., lazy = lazy)) |>
     purrr::set_names(hdtables_slugs)
 
   hdbase(hdtables,

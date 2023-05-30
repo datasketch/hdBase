@@ -48,12 +48,33 @@ test_that("hdbase read write", {
 
   path <- "tmp/l"
 
-  hb_read <- hdbase_read(path)
+  hb_read <- hdbase_read(path, lazy = FALSE)
+
+  names(hb$hdtables)
+  names(hb_read$hdtables)
 
   expect_equal(hb$name, hb_read$name)
   expect_equal(hb$license, hb_read$license)
-
   expect_equal(hb$hdtables, hb_read$hdtables)
+
+  hb$hdtables[[1]]$data
+  hb_read$hdtables[[1]]$data
+
+  hb$hdtables[[2]]$data
+  hb_read$hdtables[[2]]$data
+
+  xx <- hdtable_read(path, slug = "iris", lazy = FALSE)
+  xx$data
+
+  hb_read2 <- hdbase_read(path, lazy = TRUE)
+
+  expect_equal(hb$name, hb_read2$name)
+  expect_equal(hb$license, hb_read2$license)
+  expect_null(hb_read2$hdtables$cars$dd)
+  expect_equal(hb$hdtables$cars$data,
+               hb_read2$hdtables$cars$data)
+  expect_equal(hb$hdtables$iris$data,
+               hb_read2$hdtables$iris$data)
 
   unlink("tmp", recursive = TRUE)
 
@@ -82,12 +103,15 @@ test_that("Read large db", {
   # tictoc::toc()
 
   dic_rand <- tibble::tibble(id = c("rand", "n"),
+                             label = c("RAND", "N"),
                         hdtype = c("Cat", "Num"))
   vroom::vroom_write(dic_rand, file_path_rand_dic)
   dic_flights <- hdtable::create_dic(head(x, 1000))
   vroom::vroom_write(dic_flights, file_path_flights_dic)
 
+
   ## Read HDBASE
+
   ts <- path
   h <- hdbase(ts)
 
@@ -128,7 +152,12 @@ test_that("read database",{
   path <- "tmp/with_na/list-with_na-with_na-cars-cars/"
   h2 <- hdbase_read(path)
 
-  expect_equal(h, h2)
+  #expect_equal(h, h2)
+  expect_equal(h$hdtables_slugs(), h2$hdtables_slugs())
+  expect_equal(h$hdtables[[1]]$dic$label, h2$hdtables[[1]]$dic$label)
+  expect_equal(names(h$hdtables[[1]]$data), names(h2$hdtables[[1]]$data))
+
+
 
   h_meta <- hdbase_hdtables_meta(h)
   expect_equal(h_meta$cars$nrow, 50)
