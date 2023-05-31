@@ -11,12 +11,14 @@ hdbase_write <- function(hdb, path = ""){
 #' @export
 hdbase_read <- function(path, slug = NULL, lazy = TRUE){
 
-  find_base <- list.files(path, pattern = "\\.base\\.json")
-
   slug <- slug %||% basename(path)
   base_file <- paste0(slug, ".base.json")
-  if(! base_file  == find_base)
-    stop("base path must be the same as base.json")
+
+  if(fs::is_file(path)){
+    find_base <- list.files(path, pattern = "\\.base\\.json")
+    if(! base_file  == find_base)
+      stop("base path must be the same as base.json")
+  }
 
   meta_json <- jsonlite::read_json(file.path(path, base_file), simplifyVector = TRUE)
 

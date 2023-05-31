@@ -184,7 +184,6 @@ test_that("read database",{
 
 
   ###
-
   # path <- "tmp/db"
   # h <- hdbase_read(path)
 
@@ -193,7 +192,15 @@ test_that("read database",{
 
 test_that("read database from URL",{
 
+  path <- "https://s3.amazonaws.com/uploads.dskt.ch/test/db-cars"
+  h <- hdbase_read(path)
+  expect_equal(h$hdtables_slugs(), "cars")
+  expect_null(h$hdtables[[1]]$dd)
+  expect_equal(h$hdtables[[1]]$data, tibble::as_tibble(cars))
 
+  h <- hdbase_read(path, lazy = FALSE)
+  expect_equal(h$hdtables_slugs(), "cars")
+  expect_equal(h$hdtables[[1]]$data, tibble::as_tibble(cars))
 
 })
 
