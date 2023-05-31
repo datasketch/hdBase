@@ -4,6 +4,7 @@
 \name{reexports}
 \alias{reexports}
 \alias{hdtype}
+\alias{create_dic}
 \alias{hdtable}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -12,7 +13,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{hdtable}{\code{\link[hdtable:hdTable-package]{hdtable}}}
+  \item{hdtable}{\code{\link[hdtable]{create_dic}}, \code{\link[hdtable:hdTable-package]{hdtable}}}
 
   \item{hdtype}{\code{\link[hdtype:hdtype-package]{hdtype}}}
 }}
