@@ -125,10 +125,26 @@ test_that("Read large db", {
   hdbase_write(h, path)
 
 
-  t2 <- hdbase_read(file.path(path, "ts"))
+  b2 <- hdbase_read(file.path(path, "ts"))
+  pryr::object_size(b2)
 
+  t1 <- b2$hdtables[[1]]
+  pryr::object_size(t1)
+  expect_null(t1$dd)
+  s1 <- pryr::object_size(t1)
+  s1
+  dat <- t1$data
+  s2 <- pryr::object_size(t1)
+  expect_true(s2 > s1)
 
-
+  t2 <- b2$hdtables[[2]]
+  pryr::object_size(t2)
+  expect_null(t2$dd)
+  s1 <- pryr::object_size(t2)
+  s1
+  dat <- t2$data
+  s2 <- pryr::object_size(t2)
+  expect_true(s2 > s1)
 
 
   # tictoc::tic()
@@ -166,7 +182,21 @@ test_that("read database",{
   expect_equal(h_meta, h2_meta)
 
 
+
+  ###
+
+  # path <- "tmp/db"
+  # h <- hdbase_read(path)
+
 })
+
+
+test_that("read database from URL",{
+
+
+
+})
+
 
 
 

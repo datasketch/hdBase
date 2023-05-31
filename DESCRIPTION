@@ -1,6 +1,6 @@
 Package: hdbase
 Title: Homodatum bases
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     person(given = "Juan Pablo",
            family = "Marin Diaz",

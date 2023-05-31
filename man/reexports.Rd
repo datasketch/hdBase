@@ -12,7 +12,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{hdtable}{\code{\link[hdtable:hdtable-package]{hdtable}}}
+  \item{hdtable}{\code{\link[hdtable:hdTable-package]{hdtable}}}
 
   \item{hdtype}{\code{\link[hdtype:hdtype-package]{hdtype}}}
 }}

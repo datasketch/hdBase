@@ -14,11 +14,11 @@
 
 ## In progress
 
+- Read hdbase from url
 
 ## Todo 
 
 - Update base meta data when a csv file is updated
-
 
 
 
