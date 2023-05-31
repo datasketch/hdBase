@@ -55,7 +55,8 @@ hdbase <- function(ts,
       nms <- tools::file_path_sans_ext(basename(csv_files))
       hdts <- purrr::map(csv_files, function(file){
         dic <- vroom::vroom(gsub(".csv", ".dic.csv", file), show_col_types = F)
-        hdtable(d = file, dic = dic)
+        name <- tools::file_path_sans_ext(basename(file))
+        hdtable(d = file, dic = dic, name = name)
       })
       names(hdts) <- nms
     }

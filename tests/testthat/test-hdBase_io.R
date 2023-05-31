@@ -121,6 +121,9 @@ test_that("Read large db", {
   expect_equal(nrow(t1$dd), nrow(x))
   expect_equal(h$hdtables_slugs(), c("nycflights", "rand"))
 
+  expect_equal(t1$slug, "nycflights")
+
+
   path <- "tmp/large_files_base"
   hdbase_write(h, path)
 
