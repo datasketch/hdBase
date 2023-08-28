@@ -1,0 +1,6 @@
+^hdBase\.Rproj$
+^\.Rproj\.user$
+^data-raw$
+tmp/*
+tests/testthat/tmp/*
+
