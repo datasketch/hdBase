@@ -7,7 +7,7 @@ test_that("hdbase io", {
 
 
   expected_write_ext <- c(".base.json",".csv", ".dic.csv", ".dic.json", ".json",
-                          ".meta.json", ".xlsx")
+                          ".meta.json", ".preview.json", ".xlsx")
   expect_equal(list.files("tmp/hdb/los-carros"),
                paste0(hdb$slug, expected_write_ext))
 
