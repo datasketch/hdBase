@@ -12,8 +12,10 @@ test_that("Create hdbase ", {
   ts <- list(t1,t2)
   hb <- hdbase(ts)
   hbts <- hb$hdtables
+  expect_equal(names(hbts), hb$hdtables_slugs())
   expect_true(are_hdtables(hbts))
   slugs <- hdtables_slugs(hbts)
+
   expect_equal(slugs, c("cars", "iris"))
   expect_equal(names(hb$metadata()$hdtables_meta), c("cars", "iris"))
 

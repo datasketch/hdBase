@@ -34,6 +34,8 @@ hdbaseClass <- R6::R6Class(
       self$hdbase_type <- self$hdbase_type_creator()
       self$hdbase_type_group <- self$hdbase_type_group_creator()
 
+      names(self$hdtables) <- hdtables_slugs(self$hdtables)
+
     },
     hdtables_slugs = function(){
       self$hdtables[[1]]$slug
@@ -91,6 +93,7 @@ hdbaseClass <- R6::R6Class(
 
 
 hdtables_slugs <- function(ts){
+  if(is.null(ts)) return()
   purrr::map_chr(ts, ~ .$slug) |> unname()
 }
 
