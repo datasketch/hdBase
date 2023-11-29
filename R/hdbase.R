@@ -76,7 +76,21 @@ hdbase <- function(ts,
     if(is.null(names(hdts)))
       stop("List of data.frames must be named")
     nms <- names(hdts)
-    hdts <- purrr::map2(hdts,nms, ~ hdtable(.x, name = .y))
+
+    if(!is.null(dic)){
+      if(!are_dics(dic)){
+        stop("When input is list of dataframes dic must be a list of dic")
+      }
+      params <- purrr::transpose(list(hdts = hdts, dic = dic, name = nms))
+      hdts <- purrr::map(params, function(p){
+        hdtable(p$hdts, dic = p$dic, name = p$name)
+      })
+    }else{
+      hdts <- purrr::map2(hdts, nms, ~ hdtable(.x, name = .y))
+    }
+
+
+
   }
 
   if(!are_hdtables(hdts)){

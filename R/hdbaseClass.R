@@ -117,6 +117,12 @@ are_data_frames <- function(ts){
   all(purrr::map_lgl(ts, ~ inherits(. ,"data.frame")))
 }
 
+are_dics <- function(dic){
+  all_dfs <- all(purrr::map_lgl(dic, ~ inherits(. ,"data.frame")))
+  all_dic_nms <- all(purrr::map_lgl(dic, ~ all(c("id","hdtype") %in% names(.))))
+  all_dfs & all_dic_nms
+}
+
 
 
 

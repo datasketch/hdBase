@@ -53,6 +53,15 @@ test_that("Create hdbase ", {
   expect_equal(hb$hdbase_type_group,
                paste0(sort(c(ht1$hdtable_type, ht2$hdtable_type)), collapse = "__"))
 
+  # From a list of data.frames with a list of dictionaries
+
+  l <- list(cars = head(cars), iris = head(mtcars))
+  dics <- lapply(l, hdtable::create_dic)
+  hdts <- l
+  hb <- hdbase(l, dic = dics)
+  expect_true(is_hdbase(hb))
+  expect_equal(hdbase_hdtables(hb)[[1]]$data, head(cars),
+               ignore_attr = TRUE)
 
 })
 
