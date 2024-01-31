@@ -97,9 +97,8 @@ hdbase <- function(ts,
     stop("Must be a list of hdtables")
   }
   meta <- c(meta, list(...))
-  if(dstools::is.empty(meta)) meta <- NULL
 
-  if(dstools::is.empty(meta)) meta <- NULL
+  if(all(dstools::is.empty(meta))) meta <- NULL
 
   hdbaseClass$new(hdts,
                   name = name, description = description,

@@ -38,9 +38,13 @@ test_that("Create hdbase ", {
   l <- list(cars = head(cars), iris = head(iris))
   hb <- hdbase(l, license = "MIT")
 
+  today <- as.character(Sys.Date())
+  hdbase(l, lazy = FALSE, last_updated = today)
+
   hb$hdtables_slugs()
 
   expect_null(names(hb$hdtables_slugs()))
+
 
 
   ht1 <- hb$hdtables[[1]]
