@@ -7,6 +7,7 @@ hdbaseClass <- R6::R6Class(
     slug = NULL,
     formats = NULL,
     hdtables = NULL,
+    lazy = FALSE,
     meta = NULL,
     hdbase_type = NULL,
     hdbase_type_group = NULL,
@@ -14,6 +15,7 @@ hdbaseClass <- R6::R6Class(
     initialize = function(hdtables, dic = NULL, hdtable_type = NULL,
                           name = NULL, description = NULL,
                           slug = NULL, formats = NULL,
+                          lazy = FALSE,
                           meta = NULL) {
 
       name <- name %||% deparse(substitute(d))
@@ -30,6 +32,7 @@ hdbaseClass <- R6::R6Class(
       self$description <- description
       self$slug <- slug
       self$formats <- formats
+      self$lazy <- lazy
       self$meta <- meta
       self$hdbase_type <- self$hdbase_type_creator()
       self$hdbase_type_group <- self$hdbase_type_group_creator()

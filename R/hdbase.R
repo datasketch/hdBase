@@ -28,6 +28,7 @@ hdbase <- function(ts,
                    formats = NULL,
                    meta = NULL,
                    dic = NULL,
+                   lazy = FALSE,
                    ...){
 
   name <- name %||% deparse(substitute(ts))
@@ -48,7 +49,7 @@ hdbase <- function(ts,
       nms <- tools::file_path_sans_ext(basename(csv_files))
       hdts <- purrr::map(csv_files, function(file){
         d <- vroom::vroom(file, show_col_types = FALSE)
-        hdtable(d)
+        hdtable(d, lazy = lazy)
       })
       names(hdts) <- nms
     }else{
@@ -56,7 +57,7 @@ hdbase <- function(ts,
       hdts <- purrr::map(csv_files, function(file){
         dic <- vroom::vroom(gsub(".csv", ".dic.csv", file), show_col_types = F)
         name <- tools::file_path_sans_ext(basename(file))
-        hdtable(d = file, dic = dic, name = name)
+        hdtable(d = file, dic = dic, name = name, lazy = lazy)
       })
       names(hdts) <- nms
     }
@@ -64,7 +65,8 @@ hdbase <- function(ts,
   } else if(is.data.frame(ts)){
     hdt <- hdtable(ts, dic = dic,
                    name = name, description = description,
-                   slug = slug, formats = formats)
+                   slug = slug, formats = formats,
+                   lazy = lazy)
     hdts <- list(hdt)
   } else if(is_hdtable(ts)){
     hdts <- list(ts)
@@ -83,10 +85,10 @@ hdbase <- function(ts,
       }
       params <- purrr::transpose(list(hdts = hdts, dic = dic, name = nms))
       hdts <- purrr::map(params, function(p){
-        hdtable(p$hdts, dic = p$dic, name = p$name)
+        hdtable(p$hdts, dic = p$dic, name = p$name, lazy = lazy)
       })
     }else{
-      hdts <- purrr::map2(hdts, nms, ~ hdtable(.x, name = .y))
+      hdts <- purrr::map2(hdts, nms, ~ hdtable(.x, name = .y, lazy = lazy))
     }
 
 
@@ -104,6 +106,7 @@ hdbase <- function(ts,
                   name = name, description = description,
                   slug = slug,
                   formats = formats,
+                  lazy = lazy,
                   meta = meta)
 
 
