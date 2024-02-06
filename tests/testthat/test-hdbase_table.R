@@ -20,4 +20,11 @@ test_that("hdbase table", {
   hb2 <- hdbase_table_update(hb, table_slug = "new_cars", new_cars)
   expect_equal(hb2$hdtables_slugs(), c("cars", "mtcars", "new_cars"))
 
+  # delete
+  l <- list(cars = cars, mtcars = mtcars)
+  hb <- hdbase(l)
+  hb <- hdbase_table_delete(hb, table_slug = "cars")
+  expect_equal(hb$hdtables_slugs(), c("mtcars"))
+
+
 })

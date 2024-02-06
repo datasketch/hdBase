@@ -6,7 +6,8 @@ hdbase_table_update <- function(hb, table_slug = NULL, table = NULL, ...){
   hb
 }
 
-hdbase_table_delete <- function(hb, table_slug = NULL, table = NULL, ...){
-  hb$hdtables[[table]] <- NULL
+hdbase_table_delete <- function(hb, table_slug = NULL){
+  hb$hdtables[[table_slug]] <- NULL
   hb
 }
+
