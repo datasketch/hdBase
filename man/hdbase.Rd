@@ -12,6 +12,7 @@ hdbase(
   formats = NULL,
   meta = NULL,
   dic = NULL,
+  lazy = FALSE,
   ...
 )
 }
